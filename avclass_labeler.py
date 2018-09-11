@@ -168,6 +168,7 @@ def main(args):
 
                 # Top candidate is most likely family name
                 if tokens:
+                    print(type(tokens))
                     family = tokens[0][0]
                     is_singleton = False
                 else:
