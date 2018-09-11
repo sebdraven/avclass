@@ -1,21 +1,19 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 '''
 AVClass labeler
 '''
 
 import os
 import sys
-path = os.path.dirname(os.path.abspath(__file__))
-libpath = os.path.join(path, 'lib/')
-sys.path.insert(0, libpath)
 import argparse
-from avclass_common import AvLabels
+from lib.avclass_common import AvLabels
 from operator import itemgetter
-import evaluate_clustering as ec
+from lib import evaluate_clustering as ec
 import json
 import traceback
 
 # Default alias file
+path = os.path.dirname(__file__)
 default_alias_file = os.path.join(path, "data/default.aliases")
 # Default generic tokens file
 default_gen_file = os.path.join(path, "data/default.generics")
@@ -53,16 +51,16 @@ def main(args):
     # Build list of input files
     # NOTE: duplicate input files are not removed
     ifile_l = []
-    if (args.vt):
+    if args.vt:
         ifile_l += args.vt
         ifile_are_vt = True
-    if (args.lb):
+    if args.lb:
         ifile_l += args.lb
         ifile_are_vt = False
-    if (args.vtdir): 
+    if args.vtdir:
         ifile_l += [os.path.join(args.vtdir, f) for f in os.listdir(args.vtdir)]
         ifile_are_vt = True
-    if (args.lbdir):
+    if args.lbdir:
         ifile_l += [os.path.join(args.lbdir, f) for f in os.listdir(args.lbdir)]
         ifile_are_vt = False
 
@@ -86,7 +84,7 @@ def main(args):
 
     # Process each input file
     for ifile in ifile_l:
-        # Open file
+
         fd = open(ifile, 'r')
 
         # Debug info, file processed
@@ -198,7 +196,7 @@ def main(args):
                     gt_family = ""
 
                 # Print family (and ground truth if available) to stdout
-                print '%s\t%s%s%s' % (name, family, gt_family, is_pup_str)
+                print('%s\t%s%s%s' % (name, family, gt_family, is_pup_str))
 
                 # If verbose, print tokens (and ground truth if available) 
                 # to log file
